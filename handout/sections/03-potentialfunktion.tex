@@ -1,0 +1,97 @@
+\section{Spiele mit exakter Potentialfunktion}
+\label{sec:potential}
+
+In diesem Abschnitt führen wir \emph{exakte Potentialfunktionen} ein,
+mit deren Hilfe sich der Preis der Stabilität beschränken lässt.
+Dieses Vorgehen ist auch als \emph{Potentialfunktion-Methode} bekannt
+und findet im folgenden Abschnitt \ref{sec:global} Anwendung.
+
+\begin{definition}
+  Seien $c_i \! \mathcolon \symcal{S} \rightarrow \symbb{R}$
+  die Kostenfunktionen in einem Spiel für $k$ Spieler
+  und bezeichne $\symcal{S}$ die Menge aller Strategievektoren.
+  Eine Funktion
+  $\mupPhi \! \mathcolon \symcal{S} \rightarrow \symbb{R}$
+  heißt \emph{gewichtete Potentialfunktion} dieses Spieles,
+  falls es $w_i \in \lparen 0 \mathcomma \infty \rparen$ gibt,
+  sodass für alle $S \mathcomma S \prime \in \symcal{S}$
+  \[
+    \mupPhi \lparen S \rparen \minus \mupPhi \lparen S \prime \rparen
+    \equal
+    w_i \cdotp \big \lparen c_i \lparen S \rparen
+    \minus c_i \lparen S \prime \rparen \big \rparen
+  \]
+  gilt,
+  sofern $S \prime$ durch einen Strategiewechsel von Spieler $i$
+  aus $S$ hervorgeht.
+  Eine gewichtete Potentialfunktion mit $w_i \equal 1$ für alle $i$
+  heißt \emph{exakte Potentialfunktion}.
+\end{definition}
+
+\begin{satz}
+\label{thm:pot_nash}
+  Sei $\mupPhi$ eine exakte Potentialfunktion eines Spiels
+  und $N$ ein Strategievektor,
+  für den $\mupPhi \lparen N \rparen$ minimal ist.
+  Dann ist $N$ ein Nash-Gleichgewicht.
+\end{satz}
+
+\begin{proof}
+  Jeder beliebige Strategiewechsel eines Spielers $i$ von $N_i$ zu $S_i$
+  ergibt einen neuen Strategievektor
+  $S \equal \lparen S_i \mathcomma N_{ \minus i } \rparen$.
+  Nach Voraussetzung gilt
+  $\mupPhi \lparen S \rparen \geq \mupPhi \lparen N \rparen$
+  und so folgt
+  \[
+    c_i \lparen S \rparen \minus c_i \lparen N \rparen
+    \equal
+    \mupPhi \lparen S \rparen \minus \mupPhi \lparen N \rparen
+    \geq
+    0.
+  \]
+  Also ist auch $c_i \lparen S \rparen \geq c_i \lparen N \rparen$
+  und so der Strategiewechsel für Spieler $i$ nicht rentabel.
+  Weil $i$ beliebig war, ist $N$ folglich ein Nash-Gleichgewicht.
+\end{proof}
+
+\begin{satz}
+\label{thm:potential_bounds}
+  Sei $\mupPhi$ eine exakte Potentialfunktion eines Spiels mit Kostenfunktion
+  $\mathrm{cost}$.
+  Gibt es $A \mathcomma B \in \lparen 0 \mathcomma \infty \rparen$ mit
+  \[
+    \frac{\cost{S}}{A}
+    \leq
+    \mupPhi \lparen S \rparen
+    \leq
+    B \cdotp \cost{S}
+  \]
+  für alle Strategievektoren $S$,
+  sowie einen Strategievektor $N$, der $\mupPhi$ minimiert,
+  dann ist $AB$ eine obere Schranke für den Preis der Stabilität dieses Spiels
+  bezüglich $\mathrm{cost}$.
+\end{satz}
+
+\begin{proof}
+  Seien $A \mathcomma B \in \lparen 0 \mathcomma \infty \rparen$ wie gefordert
+  und $M$ und $N$ Strategievektoren,
+  sodass $M$ optimal und $\mupPhi \lparen N \rparen$ minimal ist.
+  Aus diesen Voraussetzungen folgt sofort
+  \begin{equation}
+  \label{eq:potential_bounds}
+    \frac{\cost{N}}{A}
+    \leq
+    \mupPhi \lparen N \rparen
+    \leq
+    \mupPhi \lparen M \rparen
+    \leq
+    B \cdotp \cost{M}.
+  \end{equation}
+  Weil $N$ gemäß Satz \ref{thm:pot_nash} ein Nash-Gleichgewicht ist,
+  bildet $\frac{\cost{N}}{\cost{M}}$ eine obere Schranke
+  für den Preis der Stabilität dieses Spieles bezüglich $\mathrm{cost}$.
+  Diese ist wiederum nach (\ref{eq:potential_bounds})
+  selbst durch $AB$ nach oben beschränkt,
+  woraus die Behauptung folgt.
+\end{proof}

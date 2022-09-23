@@ -1,0 +1,83 @@
+\section{Einleitung}
+
+Große Computernetzwerke, allen voran das Internet,
+setzen sich zahlreichen Bestandteilen zusammen,
+die von vielen verschiedenen unabhängigen Dienstleistern betrieben werden.
+Da diese in erster Linie von Eigeninteressen geleitet werden,
+ist die Spieltheorie ein naheliegender Ansatz
+zur Untersuchung der Entstehung solcher Netzwerke.
+
+In Abschnitt \ref{sec:local} betrachten wir das \emph{Local Connection Game},
+bei dem die Spieler zwei konkurrierende Ziele verfolgen.
+Einerseits gilt es, den eigenen Knoten möglichst effizient
+an die Knoten der üblichen Spieler anzuschließen,
+andererseits soll dies unter minimalem finanziellen Eigenaufwand geschehen.
+Zur Präzisierung der Effizienz werden dabei
+die Pfadlängen im entstehenden Netzwerk
+(vergleiche Definition \ref{def:dist}) verwendet.
+Dieses Spiel modelliert etwa die Aufgabe,
+Netze verschiedener Betreiber untereinander zu verbinden.
+
+Abschnitt \ref{sec:global} behandelt das \emph{Global Connection Game}.
+Hier besteht die Aufgabe eines Spielers darin,
+zwei verschiedene Knoten möglichst preisgünstig zu verbinden.
+Die Kosten einer Kante im entstehenden Netzwerk
+werden dabei unter allen Spielern fair aufgeteilt,
+die diese Kante für ihre Zwecke nutzen.
+
+Zur Bewertung der entstehenden Netzwerke
+nutzen wir jeweils die Gemeinwohlkosten,
+also die Summe der Kosten der beteiligten Akteure.
+Da beide betrachteten Spiele nur endlich viele Strategievektoren
+sowie Nash-Gleichgewichte besitzen,
+lassen sich stets der Preis der Stabilität und der Preis der Anarchie
+(siehe Definition \ref{def:pds_pda}) bilden.
+Diese beiden Größen beschreiben den Unterschied
+zwischen der Qualität eines Netzwerkes im Nash-Gleichgewicht
+und einer optimalen Lösung hinsichtlich der individuellen Ziele.
+
+\begin{definition}
+  Die Nash-Gleichgewichte eines Spiels bezeichnen wir auch
+  als \emph{stabile} Strategievektoren.
+\end{definition}
+
+\begin{definition}
+  Eine \emph{Kostenfunktion} für ein Spiel
+  ist eine Funktion
+  $\mathrm{cost} \! \mathcolon \symcal{S} \rightarrow \symbb{R}_{ \geq 0 }$
+  von der Menge aller Strategievektoren $\symcal{S}$
+  in die nicht-negativen reellen Zahlen.
+  Ein Strategievektor $M$ heißt \emph{optimal},
+  falls $\cost{M}$ minimal im Bild von $\mathrm{cost}$ ist.
+\end{definition}
+
+\begin{definition}
+\label{def:pds_pda}
+  Sei $\mathrm{cost}$ die Kostenfunktion eines Spiels
+  und $\symcal{N}$ die Menge aller Nash-Gleichgewichte.
+  Wir definieren den \emph{Preis der Stabilität}
+  und den \emph{Preis der Anarchie} dieses Spiels bezüglich $\mathrm{cost}$ als
+  \[
+    \text{Preis der Stabilität}
+    \coloneq
+    \frac{\min_{ N \in \symcal{N} } \cost{ N }}{\cost{M}}
+    \quad
+    \text{Preis der Anarchie}
+    \coloneq
+    \frac{\max_{ N \in \symcal{N} } \cost{ N }}{\cost{M}}
+  \]
+  falls sowohl ein optimaler Strategievektor $M$
+  als auch das verwendete Minimum bzw.\ Maximum existiert.
+\end{definition}
+
+\begin{definition}
+\label{def:dist}
+  Sei $G \equal \lparen V \mathcomma E \rparen$ ein Graph
+  mit $\vert V \vert \geq 2$.
+  Sind zwei Knoten $u \ne v$ über einen Pfad in $G$ verbunden,
+  bezeichnet $\dist{u}{v}$ die Länge eines minimalen derartigen Pfades.
+  Existiert kein Pfad zwischen $u$ und $v$,
+  setzen wir $\dist{u}{v} \equal \infty$.
+  Außerdem heißt~$\max_{ u \ne v } \dist{u}{v}$
+  der \emph{Durchmesser} von $G$.
+\end{definition}

@@ -1,0 +1,302 @@
+\section{Das Global Connection Game}
+\label{sec:global}
+
+Im \emph{Global Connection Game} ist
+eine $n$-elementige Knotenmenge $V$ gegeben,
+aus der jedem der $k$ Spieler zwei Knoten $s_i$ und $t_i$ zugeordnet werden.
+Ziel eines Spieler~$i$ ist es,
+die Knoten $s_i$ und $t_i$ unter möglichst geringem Kostenaufwand zu verbinden.
+Eine Strategie $S_i$ ist also ein (gerichteter) Pfad von $s_i$ nach $t_i$,
+und aus jedem Strategievektor~$S$ resultiert ein Graph
+$G \lparen S \rparen \coloneq \lparen V \mathcomma E_S \rparen$.
+Dabei ist $E_S$ die Menge aller Kanten,
+die in den individuellen Strategien von $S$ vorkommen.
+Jede in Frage kommende Kante $e$ verursacht Kosten in Höhe von
+$c_e \in \lparen 0 \mathcomma \infty \rparen$,
+und falls $e \in E_S$ bezeichnet $k_e \lparen S \rparen$ die Anzahl an Spielern,
+deren individuelle Strategie $e$ beinhaltet.
+Die Kosten für Spieler $i$ unter der Strategie $S$ sind gegeben durch
+\[
+  c_i \lparen S \rparen
+  \coloneq
+  \sum_{ e \in S_i } \frac{c_e}{k_e \lparen S \rparen},
+\]
+das heißt $c_e$ wird fair unter allen Spielern aufgeteilt,
+deren gewählter Pfad über $e$ verläuft.
+Die Gemeinwohlkosten unter $S$ sind
+die Summe der individuellen Kosten,
+also
+\[
+  \SC{S}
+  \coloneq
+  \sum_{ i \equal 1 }^k c_i \lparen S \rparen
+  \equal \sum_{ e \in E_s } c_e.
+\]
+Die behauptete Gleichung lässt sich leicht
+durch Umordnen der auftretenden Summanden zeigen,
+und so sieht man, dass $\SC{S}$
+genau den zum Errichten von $G \lparen S \rparen$ nötigen Kosten entspricht.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.48\textwidth]{strategie_r}
+  \hfill
+  \includegraphics[width=0.48\textwidth]{strategie_t}
+  \caption{Zwei mögliche Strategien bei $k \equal 3$ und $n \equal 12$.}
+  \label{im:global}
+\end{figure}
+
+\medskip
+
+Wir beginnen damit,
+den Preis der Stabilität des Global Connection Game zu untersuchen.
+Dazu finden wir eine exakte Potentialfunktion
+und wenden die Resultate aus Abschnitt \ref{sec:potential} an.
+
+\begin{definition}
+\label{def_psi}
+  Sei $S$ eine Strategie im Global Connection Game.
+  Für jede Kante $e \in E_S$ definieren wir
+  \[
+    \mupPsi_e \lparen S \rparen
+    \coloneq
+    c_e \cdotp H_{ k_e \lparen S \rparen },
+  \]
+  wobei
+  $H_k \equal \sum_{ i \equal 1 }^k \frac{1}{i}$
+  die $k$-te harmonische Zahl bezeichnet.
+  Zusätzlich sei
+  \[
+    \mupPsi \lparen S \rparen
+    \coloneq
+    \sum_{ e \in E_S } \mupPsi_e \lparen S \rparen.
+  \]
+\end{definition}
+
+\begin{lemma}
+\label{la:global_potential}
+  Die Funktion $\mupPsi$ aus Definition \ref{def_psi}
+  ist eine exakte Potentialfunktion für das Global Connection Game.
+\end{lemma}
+
+\begin{proof}
+  Betrachte einen Strategievektor
+  $R \equal \lparen R_1 \mathcomma \unicodeellipsis \mathcomma R_k \rparen$
+  für das Global Connection Game
+  sowie eine andere Strategie $T_i \ne R_i$ des Spielers $i$
+  und den daraus resultierenden Strategievektor
+  $T \coloneq \lparen T_i \mathcomma R_{ \minus i } \rparen$,
+  etwa wie in Abbildung \ref{im:global}.
+  Um die Kostenänderungen beim Übergang von $R$ nach $T$ zu untersuchen,
+  müssen alle Kanten aus
+  $G \lparen R \rparen$ und $G \lparen T \rparen$
+  betrachtet werden.
+  Dazu setzen wir $E \coloneq E_R \cup E_T$ und definieren
+  \[
+    r_i \lparen e \rparen
+    \coloneq
+    \symbb{1}_{ R_i } \lparen e \rparen
+    \cdotp \frac{c_e}{k_e \lparen R \rparen}
+    \quad
+    \text{sowie}
+    \quad
+    t_i \lparen e \rparen
+    \coloneq
+    \symbb{1}_{ T_i } \lparen e \rparen
+    \cdotp \frac{c_e}{k_e \lparen T \rparen}
+  \]
+  für alle $e \in E$.
+  Diese Werte entsprechen genau den Kosten,
+  die für Spieler $i$ durch die Kante $e$ unter $R$ bzw.\ $T$ entstehen.
+  Folglich gilt
+  \begin{equation}
+    \label{eq:global_potential1}
+    c_i \lparen R \rparen
+    \equal
+    \sum_{ e \in E } r_i \lparen e \rparen
+    \quad
+    \text{und}
+    \quad
+    c_i \lparen T \rparen
+    \equal
+    \sum_{ e \in E } t_i \lparen e \rparen.
+  \end{equation}
+
+  Wir zeigen nun,
+  dass für alle $e \in E$ die Gleichung
+  \begin{equation}
+  \label{eq:global_potential2}
+    \mupPsi_e \lparen R \rparen \minus \mupPsi_e \lparen T \rparen
+    \equal
+    r_i \lparen e \rparen \minus t_i \lparen e \rparen
+  \end{equation}
+  gilt und erhalten so mit (\ref{eq:global_potential1}) die Behauptung:
+  \begin{align*}
+    \mupPsi \lparen R \rparen \minus \mupPsi \lparen T \rparen
+    &\equal
+    \sum_{ e \in E } \mupPsi_e \lparen R \rparen
+    \minus \sum_{ e \in E } \mupPsi_e \lparen T \rparen
+    \equal
+    \sum_{ e \in E }
+    \Big \lparen \mupPsi_e \lparen R \rparen
+    \minus \mupPsi_e \lparen T \rparen \Big \rparen \\
+    &\equal
+    \sum_{ e \in E }
+    \Big \lparen r_i \lparen e \rparen
+    \minus t_i \lparen e \rparen \Big \rparen
+    \equal
+    \sum_{ e \in E } r_i \lparen e \rparen
+    \minus \sum_{ e \in E } t_i \lparen e \rparen
+    \equal
+    c_i \lparen R \rparen \minus c_i \lparen T \rparen.
+  \end{align*}
+
+  Jede Kante $e$ aus
+  $R_i \cap T_i$ oder $\lparen R_i \cup T_i \rparen ^\mathrm{C}$
+  bleibt von dem betrachteten Strategiewechsel unberührt.
+  Daher folgt
+  $r_i \lparen e \rparen \equal t_i \lparen e \rparen$
+  sowie
+  $\mupPsi_e \lparen T \rparen \equal \mupPsi_e \lparen R \rparen$
+  und so auch (\ref{eq:global_potential2}).
+
+  Für $e \in R_i \setminus T_i$ ist sowohl
+  $r_i \lparen e \rparen \equal \frac{c_e}{k_e \lparen R \rparen}$
+  als auch $t_i \lparen e \rparen \equal 0$
+  und
+  $
+    \mupPsi_e \lparen R \rparen
+    \equal
+    \mupPsi_e \lparen T \rparen \mathplus \frac{c_e}{k_e \lparen R \rparen},
+  $
+  und für $e \in T_i \setminus R_i$ erhalten wir
+  $r_i \lparen e \rparen \equal 0$
+  sowie
+  $t_i \lparen e \rparen \equal \frac{c_e}{k_e \lparen T \rparen}$
+  und
+  $
+    \mupPsi_e \lparen R \rparen \mathplus \frac{c_e}{k_e \lparen T \rparen}
+    \equal
+    \mupPsi_e \lparen T \rparen
+  $.
+  Damit gilt Gleichung (\ref{eq:global_potential2})
+  also auch in diesen beiden Fällen.
+\end{proof}
+
+\begin{lemma}
+\label{la:global_bounds}
+  Sei $S$ ein Strategievektor im Global Connection Game.
+  Dann gilt
+  \[
+    \SC{S} \leq \mupPsi \lparen S \rparen \leq H_k \cdotp \SC{S}.
+  \]
+\end{lemma}
+
+\begin{proof}
+  Für alle $e \in E_S$ gilt wegen $1 \leq k_e \leq k$ zunächst
+  $c_e H_1 \leq c_e H_{ k_e } \leq c_e H_k$,
+  woraus insbesondere
+  \begin{equation}
+  \label{eq:global_bounds}
+    H_1 \cdotp \sum_{ e \in E_S } c_e
+    \equal
+    \sum_{ e \in E_S } c_e H_1
+    \leq
+    \sum_{ e \in E_S } c_e H_{ k_e }
+    \leq
+    \sum_{ e \in E_S } c_e H_k
+    \equal
+    H_k \cdotp \sum_{ e \in E_S } c_e.
+  \end{equation}
+  folgt.
+  Weil nach Definition $\SC{S} \equal \sum_{ e \in E_S } c_e$
+  und $\mupPsi \lparen S \rparen \equal \sum_{ e \in E_S } c_e H_{ k_e }$ ist,
+  lässt sich Ungleichung (\ref{eq:global_bounds}) als
+  \[
+    H_1 \cdotp \SC{S}
+    \leq
+    \mupPsi \lparen S \rparen
+    \leq
+    H_k \cdotp \SC{S}
+  \]
+  schreiben.
+  Damit liefert $H_1 \equal 1$ die Behauptung.
+\end{proof}
+
+\begin{satz}
+  Die $k$-te harmonische Zahl ist eine obere Schranke
+  für den Preis der Stabilität des Global Connection Game.
+\end{satz}
+
+\begin{proof}
+  Nach Lemma \ref{la:global_potential} ist $\mupPsi$
+  eine exakte Potentialfunktion für das Global Connection Game.
+  Die Behauptung folgt nun aus Lemma \ref{la:global_bounds}
+  und Satz \ref{thm:potential_bounds}.
+\end{proof}
+
+\bigskip
+
+Abschließend zeigen wir noch,
+dass die Anzahl der Spieler eine obere Schranke
+für den Preis der Anarchie des Global Connection Game
+bezüglich der Gemeinwohlkosten ist.
+
+\begin{satz}
+  Die Anzahl der Spieler $k$ ist eine obere Schranke
+  für den Preis der Anarchie des Global Connection Game.
+\end{satz}
+
+\begin{proof}
+  Die Kosten eines Spielers $i$
+  lassen sich für jeden beliebigen Strategievektor $S$
+  mit Hilfe der Anzahl an Spielern nach unten abschätzen,
+  denn für alle $e \in E_S$ gilt $k_e \lparen M \rparen \leq k$ und so auch
+  \begin{equation}
+  \label{eq:global_pa}
+    c_i \lparen S \rparen
+    \equal
+    \sum_{ e \in S_i } \frac{c_e}{k_e \lparen S \rparen}
+    \geq
+    \sum_{ e \in S_i } \frac{1}{k} c_e
+    \equal
+    \frac{1}{k} \sum_{ e \in S_i } c_e.
+  \end{equation}
+
+  Sei nun $M$ ein optimaler Strategievektor und $N$ ein Nash-Gleichgewicht.
+  Aus der Annahme $\SC{N} \greater k \cdotp \SC{M}$
+  erhalten wir definitionsgemäß zunächst
+  \[
+    \sum_{ i \equal 1 }^k
+    \Big \lparen c_i \lparen N \rparen
+    \minus k c_i \lparen M \rparen \Big \rparen
+    \equal
+    \sum_{ i \equal 1 }^k c_i \lparen N \rparen
+    \minus k \cdotp \sum_{ i \equal 1 }^k c_i \lparen M \rparen
+    \equal
+    \SC{N} \minus k \cdotp \SC{M}
+    \greater
+    0,
+  \]
+  also existiert ein $i$ mit
+  $c_i \lparen N \rparen \minus k c_i \lparen M \rparen \greater 0$.
+  Für diesen Spieler ist eine Strategieänderung vorteilhaft,
+  denn gemäß Beobachtung (\ref{eq:global_pa}) folgt weiter
+  \[
+    c_i \lparen N \rparen \minus \sum_{ e \in M_i } c_e
+    \equal
+    c_i \lparen N \rparen
+    \minus k \left \lparen \frac{1}{k} \sum_{ e \in M_i } c_e \right \rparen
+    \geq
+    c_i \lparen N \rparen \minus k c_i \lparen M \rparen
+    \greater
+    0,
+  \]
+  und so insbesondere
+  $c_i \lparen N \rparen \greater
+  \sum_{ e \in M_i } c_e \geq c_i \lparen M \rparen$.
+  Dies steht jedoch im Widerspruch dazu,
+  dass~$N$ ein Nash-Gleichgewicht ist.
+  Folglich gilt $\SC{N} \leq k \cdotp \SC{M}$
+  und weil $N$ beliebig war, ist der Preis der Anarchie also höchstens $k$.
+\end{proof}

@@ -1,0 +1,52 @@
+\documentclass[a4paper,11pt]{layout}
+
+% --------------------------------- SHORTCUTS ----------------------------------
+
+\newcommand{\cost}[1]{ \mathrm{cost} \lparen #1 \rparen }
+\newcommand{\dist}[2]{ \mathrm{dist} \lparen #1 \mathcomma #2 \rparen }
+\newcommand{\SC}[1]{ \mathrm{SC} \lparen #1 \rparen }
+
+% ----------------------------------- MISC -------------------------------------
+
+% Literature.
+\addbibresource{supplies/literature.bib}
+
+% Break URL on numbers.
+\setcounter{biburlnumpenalty}{9000}
+% Break URL onL lower case letters.
+%\setcounter{biburllcpenalty}{9000}
+% Break URL on on URL UPPER CASE letters.
+%\setcounter{biburlucpenalty}{9000}
+
+% Meta information.
+\title{Spiele zur Netzwerkkonstruktion}
+\author{Maximilian Reif}
+\date{18.~Juli~2022}
+
+\hypersetup{
+  pdfinfo = {
+    Title = {Spiele zur Netzwerkkonstruktion},
+    Author = {Maximilian Reif},
+    Subject = {Spiele zur Netzwerkkonstruktion},
+    Keywords = {Preis der Stabilität, Preis der Anarchie, Spieltheorie,
+      exakte Potentialfunktion, Local Connection Game, Global Connection Game},
+    License = {CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)}
+  }
+}
+
+% ------------------------------------ END -------------------------------------
+
+\begin{document}
+
+\include{supplies/titlepage}
+
+\setcounter{page}{1}
+\input{sections/01-einleitung}
+\input{sections/02-local_connection_game}
+\input{sections/03-potentialfunktion}
+\input{sections/04-global_connection_game}
+\input{sections/05-fazit}
+
+\printbibliography[heading=bibintoc]
+
+\end{document}

@@ -1,0 +1,465 @@
+\section{Das Local Connection Game}
+\label{sec:local}
+
+Das \emph{Local Connection Game} ist ein Spiel zur Netzwerkkonstruktion
+für mindestens zwei Spieler.
+Jedem der $n$ Spieler ist ein eigener Knoten $u_i$
+aus einer $n$-elementigen Knotenmenge $V$ zugeteilt
+und das Ziel ist es,
+die Pfadlängen von dem eigenen zu den anderen Knoten
+unter möglichst geringen Ausgaben zu minimieren.
+Dafür können Kanten zu einem festgelegten Preis
+$\mupalpha \in \lparen 0 \mathcomma \infty \rparen$
+gekauft werden,
+die gegebenenfalls von allen Akteuren genutzt werden dürfen.
+Eine Strategie des Spielers $i$ ist also
+eine Menge $S_i$ von zum Knoten $u_i$ adjazenten ungerichteten Kanten
+und jeder Strategievektor
+$S \equal \lparen S_1 \mathcomma \unicodeellipsis \mathcomma S_n \rparen$
+führt zu einem Graphen
+$G \lparen S \rparen \coloneq \lparen V \mathcomma E_S \rparen$
+mit $E_S \coloneq \bigcup_{ i\equal 1 }^n S_i$.
+Die unter $S$ entstehenden Kosten für Spieler $i$ sind durch
+\[
+  c_i \lparen S \rparen
+  \coloneq
+  \mupalpha \vert S_i \vert
+  \mathplus \sum_{ v \in V \setminus \lbrace u_i \rbrace } \dist{u_i}{v}
+\]
+gegeben.
+Diese Wahl der Kostenfunktion vereint die beiden Ziele der Spieler,
+einerseits die Qualität der eigenen Anbindung zu steigern,
+andererseits den dafür notwendigen finanziellen Aufwand
+auf ein Minimum zu beschränken.
+Schließlich entsprechen die Gemeinwohlkosten unter dem Strategievektor $S$
+der Summe der unter $S$ entstehenden individuellen Kosten,
+also
+\[
+  \SC{S}
+  \coloneq
+  \sum_{ i \equal 1 }^n c_i \lparen S \rparen
+  \equal
+  \mupalpha \sum_{ i \equal 1 }^n \vert S_i \vert
+  \mathplus \sum_{ u \ne v } \dist{u}{v}.
+\]
+
+Existiert einerseits zwischen zwei Knoten kein Pfad,
+so sind die Kosten der dazugehörigen Spieler
+und damit auch die Gemeinwohlkosten unendlich.
+Ist andererseits eine Kante in Strategien von mehreren Spielern enthalten,
+so lassen sich sowohl individuelle als auch die Gemeinwohlkosten senken,
+indem nur ein Spieler besagte Kante in seiner Strategie behält.
+Somit bilden sowohl stabile als auch optimale Strategievektoren
+stets zusammenhängende einfache Graphen.
+
+\bigskip
+
+Zunächst untersuchen wir den Preis der Stabilität des Local Connection Game
+bezüglich der Gemeinwohlkosten.
+Dazu bestimmen wir in Abhängigkeit von $\mupalpha$
+optimale Lösungen und zeigen anschließend,
+für welche Werte von $\mupalpha$ diese auch Nash-Gleichgewichte bilden.
+
+\begin{lemma}
+\label{la:local_optimal}
+  Seien $R$ und $T$ Strategievektoren im Local Connection Game,
+  sodass $G \lparen R \rparen$ sternförmig
+  und $G \lparen T \rparen$ vollständig ist.
+  Dann ist $R$ optimal falls $\mupalpha \geq 2$,
+  und $T$ falls $\mupalpha \leq 2$.
+\end{lemma}
+
+\begin{proof}
+  Sei $\mupalpha \geq 2$
+  sowie $M_\geq$ ein diesbezüglich optimaler Strategievektor
+  und $m \coloneq \vert E_{ M_\geq } \vert$.
+  Zunächst schätzen wir $\SC{M_\geq}$ nach unten ab,
+  wofür wir alle $n \lparen n \minus 1 \rparen$ Knotenpaare betrachten müssen.
+  Die Knoten von $2m$ solcher Tupel sind direkt miteinander verbunden;
+  die Knoten der restlichen
+  $n \lparen n \minus 1 \rparen \minus 2m$ Tupel
+  haben mindestens Abstand $2$.
+  Es gilt also
+  \[
+    \SC{ M_\geq }
+    \geq
+    \mupalpha m \mathplus 2m
+    \mathplus 2 \cdot \lparen n \lparen n \minus 1 \rparen
+    \minus 2m \rparen
+    \equal
+    \lparen \mupalpha \minus 2 \rparen m
+    \mathplus 2n \lparen n \minus 1 \rparen.
+  \]
+  Da einerseits $G \lparen M_\geq \rparen$ zusammenhängend
+  und andererseits die gefundene untere Schranke monoton steigend in $m$ ist,
+  nimmt diese für $m \equal n \minus 1$
+  den kleinsten in Frage kommenden Wert an.
+  Nach Voraussetzung ist $M_\geq$ optimal,
+  weswegen $\SC{ M_\geq }$ genau diesem minimalen Wert entspricht.
+  Das bedeutet jedoch,
+  dass alle Knoten in $G \lparen M_\geq \rparen$ nicht nur mindestens,
+  sondern auch höchstens Abstand $2$ haben.
+  Damit ist $M_\geq$ ein Sterngraph folglich $R$ ebenfalls optimal.
+
+  Sei nun $\mupalpha \leq 2$
+  und $M_\leq$ ein in diesem Falle optimaler Strategievektor.
+  Mit $k \coloneq \vert E_{ M_\leq } \vert$ erhält man ebenso wie oben
+  \begin{equation}
+    \label{eq:local_optimal}
+    \SC{ M_\leq }
+    \geq
+    \lparen \mupalpha \minus 2 \rparen k
+    \mathplus 2n \lparen n \minus 1 \rparen
+  \end{equation}
+  und gleichermaßen entspricht $\SC{ M_\leq }$
+  dem kleinsten sinnvollen Wert
+  der unteren Schranke aus (\ref{eq:local_optimal}).
+  Wegen $\mupalpha \leq 2$ ist diese nun monoton fallend in $k$
+  und $G \lparen M_\leq \rparen$ folglich vollständig.
+  Also ist auch $T$ ein optimaler Strategievektor.
+\end{proof}
+
+\begin{figure}[h]
+  \centering
+  \caption{Zwei mögliche Graphen bei sechs Spielern.}
+  \label{im:sn_kn}
+  \subcaptionbox{$G \lparen R \rparen$ aus Lemma \ref{la:local_stabil_stern}.}{%
+    \includegraphics[width=0.45\textwidth]{s5}
+  }
+  \quad
+  \subcaptionbox{Eine Option für $G \lparen T \rparen$ aus Lemma
+    \ref{la:local_stabil_vollständig}.}{%
+    \includegraphics[width=0.45\textwidth]{k6}
+  }
+\end{figure}
+
+\begin{lemma}
+\label{la:local_stabil_stern}
+  Sei $R$ ein Strategievektor
+  im Local Connection Game mit mindestens drei Spielern,
+  sodass $G \lparen R \rparen$ sternförmig ist.
+  Es ist $R$ genau dann ein Nash-Gleichgewicht,
+  wenn $\mupalpha \geq 1$.
+\end{lemma}
+
+\begin{proof}
+  Wir zeigen die Behauptung für den Strategievektor
+  $R \equal \lparen R_1 \mathcomma
+  \varnothing \mathcomma \unicodeellipsis \mathcomma \varnothing \rparen$,
+  bei dem Spieler $1$ alle zum Knoten $u_1$ adjazenten Kanten kauft.
+  Abbildung \ref{im:sn_kn} zeigt $G \lparen R \rparen$ für sieben Spieler.
+  Für andere Strategievektoren mit sternförmigem Graphen
+  erhält man durch analoge Beobachtungen dasselbe Resultat.
+
+  Sei also $\mupalpha \geq 1$.
+  Spieler $1$ kann seine Strategie nur durch Abstoßen einer Kante
+  $\lbrace u_1 \mathcomma v \rbrace$ ändern.
+  Weil daraus aber $\dist{u_1}{v} \equal \infty$ folgt,
+  ist diese Strategieänderung nicht rentabel.
+  Jeder andere Spieler kann seine Strategie
+  nur durch Hinzufügen von $k$ Kanten ändern.
+  Damit verringert er einerseits die für ihn relevanten Pfadlängen
+  um höchstens~$k$,
+  erhöht aber gleichzeitig seine finanziellen Ausgaben
+  um $\mupalpha k \geq k$.
+  Es gibt also für keinen Spieler einen vorteilhaften Strategiewechsel.
+
+  Gelte nun $\mupalpha \less 1$.
+  Es gibt mindestens drei Spieler,
+  folglich existieren $i$ und $j$ mit $i \ne j$
+  und $R_i \equal \varnothing \equal R_j$.
+  Entscheidet sich Spieler $i$ dazu,
+  seiner Strategie die Kante $\lbrace u_i \mathcomma u_j \rbrace$ hinzuzufügen,
+  verringert das $\dist{u_i}{u_j}$ um $1$
+  und kostet lediglich $\mupalpha \less 1$.
+  Dies ist also ein sinnvoller Strategiewechsel.
+\end{proof}
+
+\begin{lemma}
+\label{la:local_stabil_vollständig}
+  Sei $T$ ein Strategievektor
+  im Local Connection Game mit mindestens drei Spielern,
+  sodass $G \lparen T \rparen$ vollständig ist.
+  Es ist $T$ genau dann ein Nash-Gleichgewicht,
+  wenn~$\mupalpha \leq 1$.
+\end{lemma}
+
+\begin{proof}
+  Sei zunächst $\mupalpha \leq 1$.
+  Kein Spieler kann durch Aufnahme einer Kante in seine Strategie
+  einen Vorteil erlangen,
+  denn die Pfadlängen zwischen allen Knoten in $G \lparen T \rparen$
+  sind bereits minimal.
+  Entfernt ein Spieler $i$ aus seiner Strategie $k$ Kanten,
+  verringert er so seine finanziellen Kosten um $\mupalpha k$;
+  gleichzeitig erhöhen sich dadurch aber auch die Pfadlängen
+  von $u_i$ zu den restlichen Knoten um mindestens $k \geq \mupalpha k$.
+  Somit kann kein Spieler seine Kosten durch eine Strategieänderung verringern.
+
+  Sei nun $\mupalpha \greater 1$.
+  Da $G \lparen T \rparen$ vollständig ist,
+  existiert ein Spieler $i$ mit nicht-leerer Strategie.
+  Das Abstoßen einer beliebiger Kante $\lbrace u_i \mathcomma v \rbrace \in T_i$
+  erhöht $\dist{u_i}{v}$ um lediglich $1$,
+  denn es gibt mindestens drei Spieler (vergleiche Abbildung \ref{im:sn_kn}).
+  Weil so aber $\mupalpha \greater 1$ finanzielle Kosten gespart werden,
+  ist diese Strategieänderung vorteilhaft für Spieler~$i$.
+\end{proof}
+
+\begin{bemerkung}
+  Wie aus Abbildung \ref{im:k2} ersichtlich,
+  gibt es für $n \equal 2$ keinen Unterschied
+  zwischen dem Sterngraph und dem vollständigen Graphen.
+  Dieser entsteht unabhängig von $\mupalpha$
+  aus allen in diesem Fall optimalen und stabilen Strategievektoren.
+  \begin{figure}[h]
+    \centering
+    \includegraphics[angle=90,height=1cm]{k2}
+    \caption{Der vollständige Graph mit zwei Knoten.}
+    \label{im:k2}
+  \end{figure}
+\end{bemerkung}
+
+\begin{satz}
+  Der Preis der Stabilität des Local Connection Game
+  ist höchstens $\frac{4}{3}$,
+  und genau~$1$
+  falls $\mupalpha \in \lparen 1 \mathcomma 2 \rparen ^\mathrm{c}$.
+\end{satz}
+
+\begin{proof}
+  Aus den Lemmas \ref{la:local_optimal}, \ref{la:local_stabil_stern}
+  und \ref{la:local_stabil_vollständig}
+  sowie der anschließenden Bemerkung ist ersichtlich,
+  dass für $\mupalpha \in \lparen 1 \mathcomma 2 \rparen ^\mathrm{c}$
+  optimale Nash-Gleichgewichte existieren.
+  Daher ist in diesem Fall der Preis der Stabilität $1$.
+
+  Sei nun $\mupalpha \in \lparen 1 \mathcomma 2 \rparen$.
+  Gemäß Lemma \ref{la:local_optimal} ist der Strategievektor
+  $R \equal \lparen R_1 \mathcomma
+  \varnothing \mathcomma \unicodeellipsis \mathcomma \varnothing \rparen$,
+  bei dem Spieler $1$ alle zum Knoten $u_1$ adjazenten Kanten kauft,
+  optimal.
+  Für diesen ergeben sich dabei Kosten in Höhe von
+  $\mupalpha \lparen n \minus 1 \rparen \mathplus \lparen n \minus 1 \rparen$.
+  Die anderen Spieler haben keine finanziellen Ausgaben
+  und untereinander Abstand $2$.
+  Unter Berücksichtigung des Abstands zu Spieler~$1$
+  führt dies jeweils zu Kosten von $2 \lparen n \minus 2 \rparen \mathplus 1$.
+  Folglich gilt
+  \[
+    \SC{R}
+    \equal
+    \mupalpha \lparen n \minus 1 \rparen \mathplus \lparen n \minus 1 \rparen
+    \mathplus
+    \lparen n \minus 1 \rparen
+    \lparen 2 \lparen n \minus 2 \rparen \mathplus 1 \rparen
+    \equal
+    \lparen n \minus 1 \rparen
+    \lparen \mupalpha \mathplus 2n \minus 2 \rparen.
+  \]
+  Um den Preis der Stabilität nach oben abzuschätzen reicht es aus,
+  die Gemeinwohlkosten eines beliebigen Nash-Gleichgewichts zu betrachten.
+  Lemma \ref{la:local_stabil_vollständig} zufolge wählen wir $T$
+  mit vollständigem $G \lparen T \rparen$
+  und erhalten mit (\ref{eq:local_optimal})
+  aus dem Beweis von Lemma \ref{eq:local_optimal}
+  \[
+    \SC{T}
+    \equal
+    \lparen \mupalpha \minus 2 \rparen
+    \frac{n \lparen n \minus 1 \rparen}{2}
+    \mathplus 2 n \lparen n \minus 1 \rparen
+    \equal
+    \lparen n \minus 1 \rparen
+    \left \lparen \frac{\mupalpha n}{2} \minus n \mathplus 2n \right \rparen
+    \equal
+    \frac{1}{2}
+    \lparen n \minus 1 \rparen
+    \lparen \mupalpha n \mathplus 2n \rparen.
+  \]
+  Damit ist
+  \[
+    \frac{\SC{R}}{\SC{T}}
+    \equal
+    \frac{\lparen n \minus 1 \rparen
+    \lparen \mupalpha \mathplus 2n \minus 2 \rparen}
+    {\frac{1}{2} \lparen n \minus 1 \rparen
+    \lparen \mupalpha n \mathplus 2n \rparen}
+    \equal
+    \frac{2 \mupalpha \mathplus 4n \minus 4}
+    {\lparen \mupalpha \mathplus 2 \rparen n}
+  \]
+  eine obere Schranke für den Preis der Stabilität.
+  Fasst man diesen Quotienten als Funktion in $\mupalpha$ auf,
+  ist diese durch $n \geq 2$ auf ganz $\symbb{R}_{ \greater 0 }$
+  monoton fallend.
+  Wegen $\mupalpha \in \lparen 1 \mathcomma 2 \rparen$ gilt daher
+  \[
+    \frac{\SC{R}}{\SC{T}}
+    \equal
+    \frac{2 \mupalpha \mathplus 4n \minus 4}
+    {\lparen \mupalpha \mathplus 2 \rparen n}
+    \leq
+    \frac{2 \mathplus 4n \minus 4}{\lparen 1 \mathplus 2 \rparen n}
+    \equal
+    \frac{4n \minus 2}{3n}
+    \less
+    \frac{4}{3}.
+  \]
+\end{proof}
+
+\bigskip
+
+Im Folgenden untersuchen wir das Local Connection Game
+im Hinblick auf den Preis der Anarchie bezüglich der Gemeinwohlkosten.
+Dazu zitieren wir ein Resultat,
+das die Gemeinwohlkosten von Nash-Gleichgewichten
+in Abhängigkeit ihrer Durchmesser beschränkt,
+und finden anschließend eine obere Schranke für eben diese Durchmesser
+in Abhängigkeit von $\mupalpha$.
+
+\begin{lemma}
+  \label{la:local_durchmesser1}
+  Sei $N$ ein Nash-Gleichgewicht im Local Connection Game
+  und $d$ der Durchmesser von $G \lparen N \rparen$.
+  Dann gilt $\SC{N} \leq O \lparen d \rparen \cdotp \SC{M}$
+  für einen beliebigen optimalen Strategievektor $M$.
+\end{lemma}
+
+\begin{proof}
+  Dies ist Lemma 19.4 dem Buch \emph{Algorithmic Game Theory}
+  \cite[S.~491f]{tardos_wexler_2007}.
+\end{proof}
+
+\begin{lemma}
+\label{la:local_durchmesser2}
+  Sei $N$ ein Nash-Gleichgewicht im Local Connection Game
+  und $d \geq 2$ der Durchmesser von $G \lparen N \rparen$.
+  Dann gilt $d \leq 2 \sqrt{\mupalpha}$.
+\end{lemma}
+
+\begin{proof}
+  Seien $u$ und $v$ zwei Knoten in $G \lparen N \rparen$
+  mit $\dist{u}{v} \equal d \geq 2$.
+  Gemäß Lemma \ref{la:local_stabil_vollständig} ist~$\mupalpha \geq 1$
+  und daher $2 \sqrt{\mupalpha} \geq 2$ ein sinnvoller Kandidat
+  für eine obere Schranke von $d$.
+  Dass dafür die Voraussetzung $d \geq 2$ tatsächlich nötig ist,
+  zeigt anschließende Bemerkung.
+
+  Wir betrachten nun den Fall,
+  dass $\mathrm{dist} \lparen u \mathcomma v \rparen$ gerade
+  mit $\mathrm{dist} \lparen u \mathcomma v \rparen \equal 2k$ ist.
+  Ein kürzester Pfad zwischen $u$ und $v$ ist dann von der Form
+  $P \equal \lparen u \mathcomma w_1 \mathcomma \unicodeellipsis
+  \mathcomma w_{ 2k \minus 1 } \mathcomma v \rparen$.
+
+  \begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{pfad_gerade}
+    \caption{Der Pfad $P$
+      mit zusätzlicher Kante $\lbrace u \mathcomma v \rbrace$.}
+    \label{im:pfad_gerade}
+  \end{figure}
+
+  Aufgrund der Minimalität von $P$ ist für jeden Knoten $w_i$ der Teilpfad
+  $\lparen u \mathcomma w_1 \mathcomma
+  \unicodeellipsis \mathcomma w_i \rparen$
+  ein minimaler Pfad zwischen $u$ und $w_i$,
+  und so gilt $\mathrm{dist} \lparen u \mathcomma w_i \rparen \equal i$.
+  Erweitert man $G \lparen N \rparen$
+  um die Kante $\lbrace u \mathcomma v \rbrace$
+  wie in Abbildung \ref{im:pfad_gerade},
+  so erhält man neben $\mathrm{dist} \lparen u \mathcomma v \rparen \equal~1$
+  auch neue Pfade
+  $\lparen u \mathcomma v \mathcomma w_{ 2k \minus 1 } \mathcomma
+  \unicodeellipsis \mathcomma w_i \rparen$
+  der Länge $2k \minus i \mathplus 1$.
+  Für alle $w_i$ mit $i \geq k \mathplus 1$ sind diese wegen
+  \[
+    2k \minus i \mathplus 1
+    \leq
+    2 \lparen i \minus 1 \rparen \minus i \mathplus 1
+    \equal
+    i \minus 1
+    \less
+    i
+  \]
+  kürzer als $\mathrm{dist} \lparen u \mathcomma w_i \rparen$
+  im ursprünglichen Graphen.
+  Insgesamt verringern sich daher auf diese Weise
+  die für Knoten $u$ relevanten Pfadlängen um
+  \[
+    2k \minus 1
+    \mathplus \sum_{ i \equal k \mathplus 1 }^{ 2k \minus 1 }
+    \Big \lparen i \minus \lparen 2k \minus i \mathplus 1 \rparen \Big \rparen
+    \equal
+    \sum_{ i \equal k \mathplus 1 }^{ 2k }
+    \Big \lparen i \minus \lparen 2k \minus i \mathplus 1 \rparen \Big \rparen
+    \equal
+    \sum_{ i \equal 1 }^k \lparen 2i \minus 1 \rparen
+    \equal
+    k^2.
+  \]
+
+  Ist $\mathrm{dist} \lparen u \mathcomma v \rparen$ hingegen ungerade
+  mit $\mathrm{dist} \lparen u \mathcomma v \rparen \equal 2k \minus 1$
+  für ein $k \geq 2$,
+  so umfasst ein kürzester Pfad zwischen $u$ und $v$ genau
+  $2k \minus 2$ weitere Knoten,
+  etwa $P \equal \lparen u \mathcomma w_1 \mathcomma \unicodeellipsis
+  \mathcomma w_{ 2k \minus 2 } \mathcomma v \rparen$.
+  Gleichermaßen erhält man
+  durch Hinzufügen der Kante $\lbrace u \mathcomma v \rbrace$
+  für alle $w_i$ mit $i \geq k \mathplus 1$
+  neue kürzeste Pfade von $u$ zu $w_i$,
+  welche in diesem Fall jeweils Länge $2k \minus i$ haben.
+  Die für $u$ relevanten Pfadlängen verringern sich dadurch also um insgesamt
+  \[
+    \lparen 2k \minus 1 \rparen \minus 1
+    \mathplus \sum_{ i \equal k \mathplus 1 }^{ 2k \minus 2 }
+    \Big \lparen i \minus \lparen 2k \minus i \rparen \Big \rparen
+    \equal
+    \sum_{ i \equal k \mathplus 1 }^{ 2k \minus 1 }
+    \Big \lparen i \minus \lparen 2k \minus i \rparen \Big \rparen
+    \equal
+    \sum_{ i \equal 1 }^{ k \minus 1 } 2i
+    \equal
+    k^2.
+  \]
+
+  Ist nun $k \greater \sqrt{\mupalpha}$,
+  so erhält der zum Knoten $u$ gehörige Spieler folglich stets einen Vorteil,
+  wenn er seine bisherige Strategie
+  um die Kante $\lbrace u \mathcomma v \rbrace$ ergänzt.
+  Da $N$ aber ein Nash-Gleichgewicht ist,
+  kann das nicht sein.
+  Somit gilt $k \leq \sqrt{\mupalpha}$
+  und damit schließlich auch~${d \equal
+  \mathrm{dist} \lparen u \mathcomma v \rparen \leq 2 \sqrt{\mupalpha}}$.
+\end{proof}
+
+\begin{bemerkung}
+  Sei $N$ ein Nash-Gleichgewicht im Local Connection Game,
+  sodass $G \lparen N \rparen$ Durchmesser $d \equal 1$ hat.
+  Dann ist $G \lparen N \rparen$ vollständig und
+  Lemma \ref{la:local_stabil_vollständig} liefert folglich $\mupalpha \leq 1$.
+  Anders als im vorangegangenen Beweis können wir also nicht folgern,
+  dass $2 \sqrt{\mupalpha}$ eine obere Schranke für $d$ ist.
+  Im Gegenteil, für $\mupalpha \less \frac{1}{4}$ gilt
+  $\sqrt{\mupalpha} \less \frac{1}{2}$
+  und so ist $2 \sqrt{\mupalpha} \less 1 \equal d$.
+\end{bemerkung}
+
+\begin{satz}
+  Der Preis der Anarchie des Local Connection Game ist höchstens
+  $O \lparen \sqrt{ \mupalpha } \rparen$.
+\end{satz}
+
+\begin{proof}
+  Dies folgt sofort
+  aus den Lemmas \ref{la:local_durchmesser1} und \ref{la:local_durchmesser2}
+  sowie der nachfolgenden Bemerkung.
+\end{proof}

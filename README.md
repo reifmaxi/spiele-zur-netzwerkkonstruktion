@@ -5,8 +5,9 @@ and the [Ipe](https://ipepresenter.otfried.org/) file of the corresponding slide
 
 A compiled version of both can be found [here](https://link.maximilianreif.de/nws).
 
-The compilation of the handout has to be done
-with [LuaTeX](https://luatex.org/) TeX engine.
+For compilation of the handout add
+`handout/supplies/` to `TEXINPUTS` environment variable
+and select [LuaTeX](https://luatex.org/) TeX engine.
 The easiest way to accomplish this is
 to use [Latexmk](https://www.ctan.org/pkg/latexmk)
 and simply run `latexmk` in the `handout` directory.

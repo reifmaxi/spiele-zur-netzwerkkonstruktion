@@ -6,11 +6,11 @@ and the [Ipe](https://ipepresenter.otfried.org/) file of the corresponding slide
 A compiled version of both can be found [here](https://link.maximilianreif.de/nws).
 
 The compilation of the handout has to be done
-with [LuaTex](https://luatex.org/) TeX engine.
+with [LuaTeX](https://luatex.org/) TeX engine.
 The easiest way to accomplish this is
-to use [Latexmkrc](https://www.ctan.org/pkg/latexmk)
+to use [Latexmk](https://www.ctan.org/pkg/latexmk)
 and simply run `latexmk` in the `handout` directory.
-Both LuaTeX engine and Latexmkrc are included in TeX Live and MiKTeX.
+Both LuaTeX engine and Latexmk are included in TeX Live and MiKTeX.
 
 For copyright reasons, I am not allowed to upload my university's logo.
 This means:
